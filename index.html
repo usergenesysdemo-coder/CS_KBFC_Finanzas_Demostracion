@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brío Financiero · Sitio demostrativo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A3D2A; --sun:#138A52; --paper:#FFFFFF; --surface:#FFFFFF;
+  --slate:#4F6358; --sky:#E6F4EC; --line:#D5E6DC; --text:#0A3D2A; --on-sun:#FFFFFF;
+  --highlight:#7FE0A8;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --ink:#E6F4EC; --sun:#2FBF73; --paper:#0B1F16; --surface:#12291E;
+    --slate:#A6BFB1; --sky:#173A2A; --line:#24493A; --text:#E6F4EC; --on-sun:#0B1F16;
+    --highlight:#2FBF73;
+    color-scheme: dark;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{font-family:'Figtree',system-ui,sans-serif;background:var(--paper);color:var(--text);font-size:17px;line-height:1.55}
+h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif;line-height:1.05;letter-spacing:-.02em}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* Banner demo */
+.demo-bar{background:var(--sun);color:var(--on-sun);font-size:14px;text-align:center;padding:8px 16px;font-weight:600}
+
+/* Nav */
+header{border-bottom:1px solid var(--line);background:var(--paper);position:sticky;top:0;z-index:20}
+nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Bricolage Grotesque';font-weight:800;font-size:26px;text-decoration:none}
+.logo-mark{width:34px;height:34px;border-radius:50% 50% 50% 8px;background:var(--sun);position:relative}
+.logo-mark::after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--paper)}
+.nav-links{display:flex;gap:28px;list-style:none;font-weight:500}
+.nav-links a{text-decoration:none;color:var(--slate)}
+.nav-links a:hover{color:var(--text)}
+.btn{display:inline-block;font:600 16px 'Figtree';padding:13px 22px;border-radius:999px;border:2px solid var(--text);background:transparent;color:var(--text);cursor:pointer;text-decoration:none}
+.btn-primary{background:var(--sun);border-color:var(--sun);color:var(--on-sun)}
+.btn-primary:hover{filter:brightness(1.05)}
+.menu-toggle{display:none}
+
+/* Hero */
+.hero{padding:72px 0 88px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(44px,6.2vw,84px);font-weight:800}
+.hero p.lead{font-size:20px;color:var(--slate);max-width:34ch;margin:24px 0 32px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.trust{margin-top:36px;display:flex;gap:28px;flex-wrap:wrap;color:var(--slate);font-size:15px}
+.trust strong{display:block;color:var(--text);font-family:'Bricolage Grotesque';font-size:24px}
+
+/* Calculadora */
+.calc{background:var(--ink);color:var(--paper);border-radius:28px 28px 28px 6px;padding:36px}
+@media (prefers-color-scheme: dark){.calc{background:var(--surface);color:var(--text);border:1px solid var(--line)}}
+.calc h2{font-size:26px;margin-bottom:6px}
+.calc .sub{opacity:.75;font-size:15px;margin-bottom:26px}
+.calc label{display:flex;justify-content:space-between;font-weight:600;font-size:15px;margin-bottom:10px}
+.calc input[type=range]{width:100%;accent-color:var(--sun);margin-bottom:22px}
+.terms{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:28px}
+.terms button{font:600 14px 'Figtree';padding:10px 0;border-radius:10px;border:1.5px solid currentColor;background:transparent;color:inherit;cursor:pointer;opacity:.7}
+.terms button[aria-pressed=true]{background:var(--sun);border-color:var(--sun);color:var(--on-sun);opacity:1}
+.result{border-top:1px solid rgba(255,255,255,.25);padding-top:22px}
+@media (prefers-color-scheme: dark){.result{border-color:var(--line)}}
+.result .big{font-family:'Bricolage Grotesque';font-size:52px;font-weight:800;color:var(--highlight);line-height:1}
+.result .small{font-size:14px;opacity:.75;margin-top:8px}
+
+/* Productos */
+section{padding:88px 0}
+.section-head{max-width:640px;margin-bottom:48px}
+.section-head h2{font-size:clamp(34px,4vw,52px);font-weight:700}
+.section-head p{color:var(--slate);margin-top:14px;font-size:19px}
+.products{display:grid;grid-template-columns:1.3fr 1fr;grid-template-rows:auto auto;gap:20px}
+.product{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:32px;display:flex;flex-direction:column;gap:12px}
+.product.feature{grid-row:span 2;background:var(--sky);border-color:transparent}
+.product h3{font-size:28px}
+.product .rate{font-family:'Bricolage Grotesque';font-size:64px;font-weight:800;line-height:1}
+.product .rate small{font-size:20px;font-weight:600}
+.product p{color:var(--slate)}
+.product ul{list-style:none;display:grid;gap:8px;margin:8px 0 12px}
+.product li{padding-left:22px;position:relative}
+.product li::before{content:"";position:absolute;left:0;top:.55em;width:10px;height:10px;border-radius:50%;background:var(--sun)}
+.product .btn{align-self:flex-start;margin-top:auto}
+
+/* Pasos */
+.steps-band{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;counter-reset:s}
+.step{counter-increment:s}
+.step::before{content:counter(s);display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--sun);color:var(--on-sun);font:800 22px 'Bricolage Grotesque';margin-bottom:18px}
+.step h3{font-size:22px;margin-bottom:8px}
+.step p{color:var(--slate)}
+
+/* Seguridad */
+.secure{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.secure-list{display:grid;gap:22px}
+.secure-list div{border-left:4px solid var(--sun);padding-left:18px}
+.secure-list h3{font-size:20px;margin-bottom:4px}
+.secure-list p{color:var(--slate)}
+
+/* FAQ */
+.faq{max-width:780px}
+details{border-bottom:1px solid var(--line);padding:20px 0}
+summary{cursor:pointer;font-weight:600;font-size:19px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:26px;line-height:1;color:var(--slate)}
+details[open] summary::after{content:"–"}
+details p{color:var(--slate);margin-top:12px;max-width:65ch}
+
+/* CTA + footer */
+.cta{background:var(--ink);color:var(--paper);border-radius:28px;padding:56px;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap}
+@media (prefers-color-scheme: dark){.cta{background:var(--sky);color:var(--text)}}
+.cta h2{font-size:clamp(30px,3.6vw,46px);max-width:18ch}
+footer{padding:56px 0 40px;color:var(--slate);font-size:15px}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;margin-bottom:40px}
+footer h4{color:var(--text);font-size:15px;margin-bottom:12px}
+footer ul{list-style:none;display:grid;gap:8px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--text)}
+.legal{border-top:1px solid var(--line);padding-top:24px;font-size:13px}
+
+/* Botón de ayuda de respaldo (se oculta si carga Genesys Messenger) */
+.help-fab{position:fixed;right:22px;bottom:22px;z-index:30;box-shadow:0 8px 24px rgba(10,61,42,.25)}
+
+/* Responsive */
+@media (max-width:900px){
+  .hero-grid,.secure,.products{grid-template-columns:1fr}
+  .product.feature{grid-row:auto}
+  .steps{grid-template-columns:1fr;gap:28px}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+  .nav-links.open{display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:var(--paper);padding:20px 24px;border-bottom:1px solid var(--line)}
+  .menu-toggle{display:inline-block;padding:10px 16px}
+  .nav-cta{display:none}
+  .cta{padding:36px}
+}
+</style>
+</head>
+<body>
+
+<div class="demo-bar">Sitio demostrativo · Marca, tasas y datos ficticios</div>
+
+<header>
+  <nav class="wrap" aria-label="Principal">
+    <a href="#" class="logo"><span class="logo-mark" aria-hidden="true"></span>Brío</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#productos">Ahorro</a></li>
+      <li><a href="#productos">Inversión</a></li>
+      <li><a href="#productos">Crédito</a></li>
+      <li><a href="#seguridad">Seguridad</a></li>
+      <li><a href="#faq">Ayuda</a></li>
+    </ul>
+    <a href="#abrir" class="btn btn-primary nav-cta">Abrir mi cuenta</a>
+    <button class="btn menu-toggle" aria-expanded="false" aria-controls="navLinks" onclick="toggleMenu(this)">Menú</button>
+  </nav>
+</header>
+
+<main>
+  <!-- Hero con calculadora -->
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Tu dinero crece desde el primer peso</h1>
+        <p class="lead">Ahorra, invierte y pide crédito desde tu celular. Sin comisiones por apertura y sin saldo mínimo.</p>
+        <div class="hero-actions">
+          <a href="#abrir" class="btn btn-primary">Abrir mi cuenta</a>
+          <a href="#productos" class="btn">Ver productos</a>
+        </div>
+        <div class="trust">
+          <div><strong>1.2 M</strong>clientes en México</div>
+          <div><strong>4.8</strong>calificación en tiendas de apps</div>
+          <div><strong>24/7</strong>atención por chat</div>
+        </div>
+      </div>
+
+      <div class="calc" aria-labelledby="calcTitle">
+        <h2 id="calcTitle">Calcula tu rendimiento</h2>
+        <p class="sub">Inversión a plazo fijo, rendimiento bruto estimado.</p>
+        <label for="monto"><span>Monto a invertir</span><span id="montoOut">$10,000</span></label>
+        <input type="range" id="monto" min="1000" max="500000" step="1000" value="10000">
+        <label as="span" id="plazoLabel"><span>Plazo</span><span id="tasaOut">9.5% anual</span></label>
+        <div class="terms" role="group" aria-labelledby="plazoLabel">
+          <button aria-pressed="false" data-dias="90" data-tasa="8.2">90 días</button>
+          <button aria-pressed="false" data-dias="180" data-tasa="8.9">180 días</button>
+          <button aria-pressed="true" data-dias="360" data-tasa="9.5">360 días</button>
+          <button aria-pressed="false" data-dias="720" data-tasa="10.1">720 días</button>
+        </div>
+        <div class="result" aria-live="polite">
+          <div class="small">Ganarías aproximadamente</div>
+          <div class="big" id="ganancia">$950</div>
+          <div class="small" id="total">Recibes $10,950 al terminar el plazo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Productos -->
+  <section id="productos">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Todo lo que necesitas en una sola app</h2>
+        <p>Elige cómo quieres hacer crecer tu dinero o financiar tus planes.</p>
+      </div>
+      <div class="products">
+        <article class="product feature">
+          <h3>Inversión a plazo</h3>
+          <div class="rate">10.1%<small> anual</small></div>
+          <p>Elige un plazo de 90 a 720 días y recibe tu rendimiento al vencimiento o cada mes.</p>
+          <ul>
+            <li>Desde $1,000</li>
+            <li>Tasa fija durante todo el plazo</li>
+            <li>Renovación automática opcional</li>
+          </ul>
+          <a href="#abrir" class="btn btn-primary">Invertir ahora</a>
+        </article>
+        <article class="product">
+          <h3>Cuenta de ahorro</h3>
+          <p>Tu dinero disponible cuando lo necesites, generando rendimiento diario.</p>
+          <ul>
+            <li>6.5% anual sin plazo forzoso</li>
+            <li>Tarjeta de débito sin costo</li>
+          </ul>
+          <a href="#abrir" class="btn">Empezar a ahorrar</a>
+        </article>
+        <article class="product">
+          <h3>Crédito personal</h3>
+          <p>Solicita entre $5,000 y $150,000 y conoce la respuesta en minutos.</p>
+          <ul>
+            <li>Pagos fijos semanales o mensuales</li>
+            <li>Sin penalización por pago anticipado</li>
+          </ul>
+          <a href="#abrir" class="btn">Solicitar crédito</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pasos (secuencia real) -->
+  <section id="abrir" class="steps-band">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Abre tu cuenta en 10 minutos</h2>
+        <p>Solo necesitas tu INE y tu celular.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><h3>Descarga la app</h3><p>Disponible para iOS y Android.</p></div>
+        <div class="step"><h3>Valida tu identidad</h3><p>Toma una foto de tu INE y una selfie. La revisión es automática.</p></div>
+        <div class="step"><h3>Deposita y elige tu producto</h3><p>Transfiere por SPEI o deposita en tiendas de conveniencia.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seguridad -->
+  <section id="seguridad">
+    <div class="wrap secure">
+      <div class="section-head">
+        <h2>Tu dinero está protegido</h2>
+        <p>Operamos con controles de seguridad de nivel bancario y supervisión de las autoridades financieras.</p>
+      </div>
+      <div class="secure-list">
+        <div><h3>Seguro de depósitos</h3><p>Tus ahorros están protegidos hasta el límite que marca la ley.</p></div>
+        <div><h3>Acceso con biometría</h3><p>Entra con tu huella o rostro y autoriza cada operación desde tu celular.</p></div>
+        <div><h3>Alertas en tiempo real</h3><p>Recibe una notificación por cada movimiento en tu cuenta.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="steps-band">
+    <div class="wrap">
+      <div class="section-head"><h2>Preguntas frecuentes</h2></div>
+      <div class="faq">
+        <details><summary>¿Cuánto necesito para abrir una cuenta?</summary><p>Nada. Puedes abrirla sin saldo inicial y empezar a invertir desde $1,000.</p></details>
+        <details><summary>¿Puedo retirar mi inversión antes del plazo?</summary><p>La inversión a plazo se libera al vencimiento. Si necesitas liquidez, te recomendamos combinarla con la cuenta de ahorro.</p></details>
+        <details><summary>¿Cómo solicito un crédito?</summary><p>Desde la app, en la sección Crédito. Te pedimos tus ingresos y en minutos te mostramos el monto y las condiciones.</p></details>
+        <details><summary>¿Cómo contacto a un asesor?</summary><p>Escríbenos por el chat de esta página o de la app, las 24 horas, o llámanos al 55 0000 0000.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="cta">
+        <h2>Empieza hoy, tu dinero no tiene por qué esperar</h2>
+        <a href="#abrir" class="btn btn-primary">Abrir mi cuenta</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div><a href="#" class="logo"><span class="logo-mark" aria-hidden="true"></span>Brío</a><p style="margin-top:12px;max-width:30ch">Servicios financieros digitales para México.</p></div>
+      <div><h4>Productos</h4><ul><li><a href="#productos">Ahorro</a></li><li><a href="#productos">Inversión</a></li><li><a href="#productos">Crédito</a></li></ul></div>
+      <div><h4>Ayuda</h4><ul><li><a href="#faq">Preguntas frecuentes</a></li><li><a href="#" onclick="openChat();return false;">Chat</a></li><li><a href="#">Une</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="#">Aviso de privacidad</a></li><li><a href="#">Términos</a></li><li><a href="#">Comisiones</a></li></ul></div>
+    </div>
+    <p class="legal">Brío Financiero es una marca ficticia creada para fines de demostración. Las tasas, montos y datos mostrados no representan productos reales. GAT y CAT ilustrativos.</p>
+  </div>
+</footer>
+
+<!-- Botón de respaldo: abre Messenger si está cargado -->
+<button class="btn btn-primary help-fab" id="helpFab" onclick="openChat()">¿Te ayudamos?</button>
+
+<script>
+/* ===== Calculadora ===== */
+const fmt = n => n.toLocaleString('es-MX',{style:'currency',currency:'MXN',maximumFractionDigits:0});
+const monto = document.getElementById('monto');
+const termBtns = document.querySelectorAll('.terms button');
+let dias = 360, tasa = 9.5;
+function calc(){
+  const m = +monto.value;
+  const g = m * (tasa/100) * (dias/360);
+  document.getElementById('montoOut').textContent = fmt(m);
+  document.getElementById('tasaOut').textContent = tasa + '% anual';
+  document.getElementById('ganancia').textContent = fmt(g);
+  document.getElementById('total').textContent = 'Recibes ' + fmt(m+g) + ' al terminar el plazo';
+}
+monto.addEventListener('input', calc);
+termBtns.forEach(b => b.addEventListener('click', () => {
+  termBtns.forEach(x => x.setAttribute('aria-pressed','false'));
+  b.setAttribute('aria-pressed','true');
+  dias = +b.dataset.dias; tasa = +b.dataset.tasa; calc();
+}));
+calc();
+
+/* ===== Menú móvil ===== */
+function toggleMenu(btn){
+  const l = document.getElementById('navLinks');
+  const open = l.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open);
+}
+
+/* ===== Genesys Cloud Web Messenger =====
+   1. Pega tu Deployment ID y ajusta el dominio de tu región.
+   2. Si DEPLOYMENT_ID queda vacío, el botón de respaldo muestra un aviso. */
+const GENESYS_CONFIG = {
+  DEPLOYMENT_ID: '3ef5b987-e978-4d21-a6da-9562d5eebb9d',
+  ENV: 'prod',
+  DOMAIN: 'mypurecloud.com'
+};
+if (GENESYS_CONFIG.DEPLOYMENT_ID){
+  (function (g, e, n, es, ys) {
+    g['_genesysJs'] = e;
+    g[e] = g[e] || function () { (g[e].q = g[e].q || []).push(arguments) };
+    g[e].t = 1 * new Date(); g[e].c = es;
+    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8';
+    document.head.appendChild(ys);
+  })(window, 'Genesys', 'https://apps.' + GENESYS_CONFIG.DOMAIN + '/genesys-bootstrap/genesys.min.js', {
+    environment: GENESYS_CONFIG.ENV,
+    deploymentId: GENESYS_CONFIG.DEPLOYMENT_ID
+  });
+  // Messenger trae su propio launcher; ocultamos el de respaldo
+  document.getElementById('helpFab').style.display = 'none';
+}
+function openChat(){
+  if (window.Genesys && GENESYS_CONFIG.DEPLOYMENT_ID){
+    Genesys('command','Messenger.open');
+  } else {
+    alert('Configura GENESYS_CONFIG.DEPLOYMENT_ID para activar el chat.');
+  }
+}
+</script>
+</body>
+</html>
